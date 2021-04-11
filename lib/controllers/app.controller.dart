@@ -28,13 +28,14 @@ abstract class _AppController with Store {
 
   @action
   createPost(String text) {
-    final post = Posts(
+    final post = new Posts(
       id: Random().nextDouble().toString(),
       autorNome: 'John Doe',
       dataHora: '25/12',
       texto: text,
     );
     mockPost.add(post);
+    print(post);
   }
 
   @action
