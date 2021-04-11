@@ -21,23 +21,6 @@ abstract class _AppController with Store {
   @observable
   ObservableList<Posts> mockPost = ObservableList<Posts>();
 
-  @observable
-  ObservableList<String> errors = ObservableList<String>();
-
-  @action
-  addError({String error}) {
-    if (!errors.contains(error)) {
-      errors.add(error);
-    }
-  }
-
-  @action
-  removeError({String error}) {
-    if (errors.contains(error)) {
-      errors.remove(error);
-    }
-  }
-
   @action
   loadPosts() async {
     listPost = ObservableList<Posts>.of(await _postRepository.getPosts());
