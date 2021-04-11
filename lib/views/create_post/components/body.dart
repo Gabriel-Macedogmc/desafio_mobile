@@ -18,6 +18,23 @@ class _BodyState extends State<Body> {
   final _controller = AppController();
 
   var posts = new Posts();
+  List<String> errors = [];
+
+  addError({String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  removeError({String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +51,7 @@ class _BodyState extends State<Body> {
                   children: [
                     buildTextoFormField(),
                     SizedBox(height: 10),
-                    Observer(
-                      builder: (_) => FormError(errors: _controller.errors),
-                    ),
+                    FormError(errors: errors),
                     SizedBox(height: 10),
                     DefaultButton(
                       text: "POSTAR",
@@ -72,18 +87,18 @@ class _BodyState extends State<Body> {
       },
       onChanged: (value) {
         if (value.isNotEmpty) {
-          _controller.addError(error: kTextolNullError);
+          addError(error: kTextolNullError);
         } else if (value.length > 20) {
-          _controller.removeError(error: kTextoSmallError);
+          removeError(error: kTextoSmallError);
         }
         return null;
       },
       validator: (value) {
         if (value.isEmpty) {
-          _controller.addError(error: kTextolNullError);
+          addError(error: kTextolNullError);
           return "";
         } else if (value.length < 20) {
-          _controller.addError(error: kTextoSmallError);
+          addError(error: kTextoSmallError);
           return "";
         }
         return null;
